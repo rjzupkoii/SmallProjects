@@ -1,13 +1,35 @@
 to setup
   clear-all
-  set-default-shape turtles"boat"
-  create-turtles 3 [ setxy random-xcor random-ycor ]
   create-patches
+  create-agents
   reset-ticks
 end
 
+to create-agents
+  set-default-shape turtles"boat"
+  create-turtles 3 [ setxy random-xcor random-ycor ]
+end
+
 to create-patches
+  ; Create the ocean
+  resize-world 0 33 0 33
   ask patches [ set pcolor blue ]
+
+  ; Create the oil rig
+  let ndx 5
+  let ndy world-height - 5
+  ask patch ndx ndy [ set pcolor black ]
+
+  ; Create the beach
+  set ndx world-width - 2
+  while [ndx < world-width ] [
+    set ndy 0
+    while [ ndy <= world-height ] [
+      ask patch ndx ndy [ set pcolor yellow ]
+      set ndy ndy + 1
+    ]
+    set ndx ndx + 1
+  ]
 end
 
 to go
@@ -20,14 +42,17 @@ to move-turtles
   ask turtles [
     right random 360
     forward 1
+    if pcolor != blue [
+      back 1
+    ]
   ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
 10
-647
-448
+660
+461
 -1
 -1
 13.0
@@ -40,10 +65,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+0
+33
+0
+33
 0
 0
 1
@@ -69,9 +94,9 @@ NIL
 
 BUTTON
 13
-58
+59
 76
-91
+92
 Go
 go
 NIL
