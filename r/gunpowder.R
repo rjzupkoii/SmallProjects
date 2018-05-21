@@ -27,7 +27,7 @@ analysis <- function() {
 	# Remove all of the NOPs
 	results <- results[results[,4] != 0,]
 	results <- head(results, -1)
-		
+			
 	# Label the columes
 	colnames(results) <- c('KNO3', 'C7H4O', 'S', 'Enthalpy')
 		
@@ -36,8 +36,10 @@ analysis <- function() {
 }
 
 calculate <- function(kno3, c7h4o, s) {
-	# Return if the sum is not 1
-	if (kno3 + c7h4o + s != 1.0) {
+	
+	# Return if the sum is not 1, note the rounding to deal with floating points
+	result <- round(kno3 + c7h4o + s, 10)
+	if (result != 1.0) {
 		return(0)	
 	}
 		
@@ -102,5 +104,5 @@ known <- function() {
 	return(df)
 }
 
-analysis()
-#plot()
+#analysis()
+plot()
