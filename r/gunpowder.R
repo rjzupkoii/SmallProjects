@@ -12,27 +12,34 @@ analysis <- function() {
 	# Set up the parameters of the experiment
 	range <- seq(0.0, 1.0, by = 0.01)
 	ndx <- 0
-	results <- matrix(, nrow=length(range) ^ 3, ncol=4)
+	data <- matrix(, nrow=length(range) ^ 3, ncol=5)
 		
 	# Find the relevent mass percentages
 	for (kno3 in range) {
 		for (c7h4o in range) {
 			for (s in range) {
-				results[ndx, ] <- c(kno3, c7h4o, s, calculate(kno3, c7h4o, s))
-				ndx <- ndx + 1
+				results <- calculate(kno3, c7h4o, s)
+				if (results[1] != 0) { 
+					data[ndx, ] <- append(c(kno3, c7h4o, s), results)
+					ndx <- ndx + 1
+				}
 			}
 		}
 	}
 		
 	# Remove all of the NOPs
-	results <- results[results[,4] != 0,]
-	results <- head(results, -1)
+	data <- data[rowSums(is.na(data)) == 0,] 
 			
 	# Label the columes
-	colnames(results) <- c('KNO3', 'C7H4O', 'S', 'Enthalpy')
+	colnames(data) <- c('KNO3', 'C7H4O', 'S', 'Limiting', 'Enthalpy')
+	
+	# Convert to a data frame and label the limiting reactant
+	data <- as.data.frame(data)
+	data$Reactant <- factor(data$Limiting, levels = c(1, 2, 3), labels = c("Saltpeter", "Charcoal", "Sulfur"))
+	data$Limiting <- NULL
 		
 	# Write the results and return it for plotting
-	write.csv(results, 'results.csv', row.names = F)
+	write.csv(data, 'results.csv', row.names = F)
 }
 
 calculate <- function(kno3, c7h4o, s) {
@@ -40,7 +47,7 @@ calculate <- function(kno3, c7h4o, s) {
 	# Return if the sum is not 1, note the rounding to deal with floating points
 	result <- round(kno3 + c7h4o + s, 10)
 	if (result != 1.0) {
-		return(0)	
+		return(c(0, 0))	
 	}
 		
 	# Define our working matrix
@@ -66,13 +73,14 @@ calculate <- function(kno3, c7h4o, s) {
 	# Find the change of enthalphy for the limiting reactant
 	limiting <- which.min(working[,'limiting'])
 	enthalpy <- working[limiting, 'enthalpy']
-	return(enthalpy)		
+	return(c(limiting, enthalpy))		
 }
 
 plot <- function() {	
 	df <- read.csv(file = "results.csv", header = T)
 	points <- known()
 	
+	# Plot the limiting enthalpy values
 	ggtern(df, aes(KNO3, C7H4O, S, value = Enthalpy), aes(x, y, z)) +
 			geom_point(aes(fill = Enthalpy), size = 2, stroke = 0, shape = 21) + 
 			scale_fill_gradient(low = "red",high = "yellow", guide = F) + 
@@ -91,7 +99,20 @@ plot <- function() {
 				xarrow = "Percent Saltpeter",
 				yarrow = "Percent Charcoal",
 				zarrow = "Percent Sulfur")
-	ggsave('plot.png')
+	ggsave('enthalpy.png')
+	
+	# Plot the constraining reacant
+	ggtern(df, aes(KNO3, C7H4O, S, value = Reactant), aes(x, y, z)) +
+			geom_point(aes(fill = Reactant), size = 2, stroke = 0, shape = 21) +
+			theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
+			theme_rgbw() + 
+			theme_nogrid() +
+			theme_legend_position('topleft') +
+			labs(title = "Theoretical Black Powder Performance", fill = "Limiting Reactant",
+					xarrow = "Percent Saltpeter",
+					yarrow = "Percent Charcoal",
+					zarrow = "Percent Sulfur")
+	ggsave('limiting.png')
 }
 
 known <- function() {
@@ -104,5 +125,5 @@ known <- function() {
 	return(df)
 }
 
-#analysis()
+analysis()
 plot()
