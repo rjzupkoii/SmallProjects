@@ -6,7 +6,7 @@ suppressPackageStartupMessages(library('ggtern'))
 library('reshape2')
 
 # Change in enthalpy of reaction in kJ
-REACTION <- -8397.47
+REACTION <- -13167.55
 
 analysis <- function() {
 	# Set up the parameters of the experiment
@@ -16,11 +16,11 @@ analysis <- function() {
 		
 	# Find the relevent mass percentages
 	for (kno3 in range) {
-		for (c7h4o in range) {
+		for (c6h2o in range) {
 			for (s in range) {
-				results <- calculate(kno3, c7h4o, s)
+				results <- calculate(kno3, c6h2o, s)
 				if (results[1] != 0) { 
-					data[ndx, ] <- append(c(kno3, c7h4o, s), results)
+					data[ndx, ] <- append(c(kno3, c6h2o, s), results)
 					ndx <- ndx + 1
 				}
 			}
@@ -31,7 +31,7 @@ analysis <- function() {
 	data <- data[rowSums(is.na(data)) == 0,] 
 			
 	# Label the columes
-	colnames(data) <- c('KNO3', 'C7H4O', 'S', 'Limiting', 'Enthalpy')
+	colnames(data) <- c('KNO3', 'C6H2O', 'S', 'Limiting', 'Enthalpy')
 	
 	# Convert to a data frame and label the limiting reactant
 	data <- as.data.frame(data)
@@ -42,10 +42,10 @@ analysis <- function() {
 	write.csv(data, 'results.csv', row.names = F)
 }
 
-calculate <- function(kno3, c7h4o, s) {
+calculate <- function(kno3, c6h2o, s) {
 	
 	# Return if the sum is not 1, note the rounding to deal with floating points
-	result <- round(kno3 + c7h4o + s, 10)
+	result <- round(kno3 + c6h2o + s, 10)
 	if (result != 1.0) {
 		return(c(0, 0))	
 	}
@@ -53,21 +53,21 @@ calculate <- function(kno3, c7h4o, s) {
 	# Define our working matrix
 	working <- matrix(1, nrow=3, ncol=3)
 	colnames(working) <- c('mols', 'limiting', 'enthalpy')
-	rownames(working) <- c('kno3', 'c7h4o', 's')
+	rownames(working) <- c('kno3', 'c6h2o', 's')
 		
 	# Find the mols of each
 	working['kno3', 'mols'] <- (kno3 * 100) / 101.1032
-	working['c7h4o', 'mols'] <- (c7h4o * 100) / 104.1061
+	working['c6h2o', 'mols'] <- (c6h2o * 100) / 90.0794
 	working['s', 'mols'] <- (s * 100) / 32.065
 	
 	# Find the limiting reactant
 	working['kno3', 'limiting'] <- working['kno3', 'mols'] / 74
-	working['c7h4o', 'limiting'] <- working['c7h4o', 'mols'] / 16
+	working['c6h2o', 'limiting'] <- working['c6h2o', 'mols'] / 16
 	working['s', 'limiting'] <- working['s', 'mols'] / 30
 	
 	# Find the change in enthalpy per reactant
 	working['kno3', 'enthalpy'] <- (REACTION / 74) * working['kno3', 'mols']
-	working['c7h4o', 'enthalpy'] <- (REACTION / 16) * working['c7h4o', 'mols']
+	working['c6h2o', 'enthalpy'] <- (REACTION / 16) * working['c6h2o', 'mols']
 	working['s', 'enthalpy'] <- (REACTION / 30) * working['s', 'mols']
 	
 	# Find the change of enthalphy for the limiting reactant
@@ -81,13 +81,11 @@ plot <- function() {
 	points <- known()
 	
 	# Plot the limiting enthalpy values
-	ggtern(df, aes(KNO3, C7H4O, S, value = Enthalpy), aes(x, y, z)) +
+	ggtern(df, aes(KNO3, C6H2O, S, value = Enthalpy), aes(x, y, z)) +
 			geom_point(aes(fill = Enthalpy), size = 2, stroke = 0, shape = 21) + 
 			scale_fill_gradient(low = "red",high = "yellow", guide = F) + 
 			scale_color_gradient(low = "red",high = "yellow", guide = F) +
-			
-#			geom_point(data = points, color = "black", shape = 21) +
-						
+							
 			theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
 			theme_rgbw() + 
 			theme_nogrid() +
@@ -102,7 +100,7 @@ plot <- function() {
 	ggsave('enthalpy.png')
 	
 	# Plot the constraining reacant
-	ggtern(df, aes(KNO3, C7H4O, S, value = Reactant), aes(x, y, z)) +
+	ggtern(df, aes(KNO3, C6H2O, S, value = Reactant), aes(x, y, z)) +
 			geom_point(aes(fill = Reactant), size = 2, stroke = 0, shape = 21) +
 			theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
 			theme_rgbw() + 
@@ -118,10 +116,10 @@ plot <- function() {
 known <- function() {
 	# Gunpowder, blasting powder, sodium nitrate blasting powder, French war powder, Congreve rockets  
 	KNO3 = c(0.75, 0.7, 0.4, 0.75, 0.624)
-	C7H4O = c(0.15, 0.14, 0.3, 0.125, 0.232)
+	C6H2O = c(0.15, 0.14, 0.3, 0.125, 0.232)
 	S = c(0.10, 0.16, 0.3, 0.125, 0.144)
 	Enthalpy = c(0.0)
-	df = data.frame(KNO3, C7H4O, S, Enthalpy)
+	df = data.frame(KNO3, C6H2O, S, Enthalpy)
 	return(df)
 }
 
