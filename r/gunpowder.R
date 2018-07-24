@@ -81,36 +81,64 @@ plot <- function() {
 	points <- known()
 	
 	# Plot the limiting enthalpy values
+	plotEnthalpy(df, "red", "yellow", "enthalpy.png")
+	plotEnthalpy(df, "gray0", "gray100", "enthalpy-grayscale.png")
+	
+	# Plot the constraining reacant
+#	plotLimiting(df, "color", "limiting.png")
+#	plotLimiting(df, "gray", "limiting-grayscale.png")
+}
+
+plotEnthalpy <- function(df, low, high, fileName) {
 	ggtern(df, aes(KNO3, C6H2O, S, value = Enthalpy), aes(x, y, z)) +
 			geom_point(aes(fill = Enthalpy), size = 2, stroke = 0, shape = 21) + 
-			scale_fill_gradient(low = "red",high = "yellow", guide = F) + 
-			scale_color_gradient(low = "red",high = "yellow", guide = F) +
-							
-			theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
-			theme_rgbw() + 
-			theme_nogrid() +
-			theme_legend_position('topleft') +
-		
-			guides(fill = guide_colorbar(order=1), alpha= guide_legend(order=2), color="none") + 			
-		
-			labs(title = "Theoretical Black Powder Performance", fill = "Limiting Enthalpy (kJ)",
+			scale_fill_gradient(low = low, high = high, guide = F) + 
+			scale_color_gradient(low = low, high = high, guide = F) +
+			guides(fill = guide_colorbar(order=1), alpha= guide_legend(order=2), color="none") 			
+	
+	# Apply the theme color
+	if (grepl("gray", low)) {
+		last_plot() + theme_classic() + theme_showarrows()
+	} else {
+		last_plot() + theme_rgbw() 
+	}
+
+	last_plot() +
+		theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
+		theme_nogrid() +
+		theme_legend_position('topleft') +
+		labs(title = "Theoretical Black Powder Performance", fill = "Limiting Enthalpy (kJ)",
 				xarrow = "Percent Saltpeter",
 				yarrow = "Percent Charcoal",
 				zarrow = "Percent Sulfur")
-	ggsave('enthalpy.png')
-	
-	# Plot the constraining reacant
+			
+	ggsave(fileName)
+}
+
+plotLimiting <- function(df, color, fileName) {
 	ggtern(df, aes(KNO3, C6H2O, S, value = Reactant), aes(x, y, z)) +
 			geom_point(aes(fill = Reactant), size = 2, stroke = 0, shape = 21) +
-			theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
-			theme_rgbw() + 
-			theme_nogrid() +
-			theme_legend_position('topleft') +
 			labs(title = "Theoretical Black Powder Performance", fill = "Limiting Reactant",
 					xarrow = "Percent Saltpeter",
 					yarrow = "Percent Charcoal",
 					zarrow = "Percent Sulfur")
-	ggsave('limiting.png')
+	
+	# Apply the thme color
+	if (grepl("gray", color)) {
+		last_plot() +
+				theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
+				theme_bw() + 
+				theme_nogrid() +
+				theme_legend_position('topleft')				
+	} else {
+		last_plot() +
+			theme(legend.justification = c(0, 1), legend.position = c(0, 1)) +
+			theme_rgbw() + 
+			theme_nogrid() +
+			theme_legend_position('topleft')
+	}
+	
+	ggsave(fileName)
 }
 
 known <- function() {
