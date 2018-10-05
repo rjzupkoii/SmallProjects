@@ -7,6 +7,7 @@ WORKING_DIR = 'C:\Users\Robert Zupko\git\SmallProjects\matlab\aps_lab\2018.09.19
 
 % Setup the environment
 addpath('./methods');
+warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames')
 
 % Start by scanning for the directories that we care about
 scanDirectory(WORKING_DIR)
@@ -22,7 +23,7 @@ function [] = scanDirectory(directory)
             case 'Horiba'
                 disp('Horiba')
             case 'CAS'
-                disp('CAS')
+                cas(path{1})
             case 'Veristand'
                 veristand(path{1})
         end
