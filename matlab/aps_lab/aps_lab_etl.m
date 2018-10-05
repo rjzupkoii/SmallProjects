@@ -24,7 +24,7 @@ function [] = scanDirectory(directory)
             case 'CAS'
                 disp('CAS')
             case 'Veristand'
-                disp('Veristand')
+                veristand(path{1})
         end
     end
 end
