@@ -2,7 +2,8 @@
 %
 % This file contains Veristand specific routines.
 
-function [] = veristand(directory)
+function [sheet] = veristand(directory)
+    sheet = [];
     contents = dir(directory);
     for ndx = 1 : length(contents)
         if contents(ndx).isdir
@@ -10,7 +11,7 @@ function [] = veristand(directory)
         end
         path = strcat(directory, '\', contents(ndx).name);
         testNo = extractBetween(contents(ndx).name, 1, strfind(contents(ndx).name, '.') - 1);   
-        results = process(path, testNo);
+        sheet = [sheet; process(path, testNo)]; %#ok
     end
 end
 
@@ -20,7 +21,6 @@ function [results] = process(file, testNo)
     results = [results, testNo];
     results = [results, extract('LFEAirmass', @averageTen, data)];
     results = [results, extract('AI2_34 Lambda 1', @averageTen, data)];
-    results = [results, extract('CNG_FlowAverageRT', @averageTen, data)];
     results = [results, extract('T2_15 Intake Plenum Below Throttle', @averageTen, data)];
     results = [results, extract('T2_16 EGT 1', @averageTen, data)];
     results = [results, extract('T2_17 EGT 2', @averageTen, data)];

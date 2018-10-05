@@ -2,7 +2,9 @@
 %
 % This file contains CAS specific routines.
 
-function [] = cas(directory)
+function [sheet] = cas(directory)
+    sheet = [];
+
     % CAS files are in subdirectories organized by the test number
     contents = dir(directory);
     for ndx = 1 : length(contents)
@@ -13,7 +15,7 @@ function [] = cas(directory)
             continue
         end
         path = strcat(directory, '\', contents(ndx).name);
-        results = process(path, contents(ndx).name);
+        sheet = [sheet; process(path, contents(ndx).name)]; %#ok
     end
 end
 

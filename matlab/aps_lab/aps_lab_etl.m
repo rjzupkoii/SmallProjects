@@ -7,25 +7,37 @@ WORKING_DIR = 'C:\Users\Robert Zupko\git\SmallProjects\matlab\aps_lab\2018.09.19
 
 % Setup the environment
 addpath('./methods');
+warning('OFF', 'MATLAB:mkdir:DirectoryExists');
 warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames')
+
+% Make sure our output exists
+mkdir('out');
 
 % Start by scanning for the directories that we care about
 scanDirectory(WORKING_DIR)
 
 function [] = scanDirectory(directory)
+    % Find the directories to work with
     contents = dir(directory);
     directoryNames = {contents([contents.isdir]).name};
-    for name = directoryNames
+    directoryNames = setxor(directoryNames, {'.', '..'});
+    for name = directoryNames        
+        % Process the data
+        sheet = [];
         path = strcat(directory, '\', name);
         switch name{1}
             case 'Mototune'
-                mototune(path{1})
+                sheet = mototune(path{1});
             case 'Horiba'
-                disp('Horiba')
+                sheet = horiba(path{1});
             case 'CAS'
-                cas(path{1})
+                sheet = cas(path{1});
             case 'Veristand'
-                veristand(path{1})
+                sheet = veristand(path{1});
         end
+        
+        % Write the data to a worksheet
+        file = strcat('out\', name, '.xlsx');
+        xlswrite(file{1}, sheet)
     end
 end
