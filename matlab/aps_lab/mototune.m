@@ -9,10 +9,21 @@ function [] = mototune(directory)
             continue
         end
         path = strcat(directory, '\', contents(ndx).name);
-        process(path);
+        testNo = extractBetween(contents(ndx).name, 1, strfind(contents(ndx).name, '.') - 1);   
+        results = process(path, testNo);
     end
 end
 
-function [] = process(file)
-    disp(file)
+function [results] = process(file, testNo)
+    data = importdata(file, '\t');
+    results = [];
+    results = [results, testNo];
+    results = [results, extract('D_NOx_exhaust', @averageTen, data)];
+    results = [results, extract('D_O2_exhaust', @averageTen, data)];
+    results = [results, extract('D_VGT_position48', @averageTen, data)];
+    results = [results, extract('D_ETC_PWM_Out', @averageTen, data)];
+    results = [results, extract('EGR_rate', @averageTen, data)];
+    results = [results, extract('D_SOI_dbtdc', @averageTen, data)];
+    results = [results, extract('D_Rp_Bar', @averageTen, data)];
+    results = [results, extract('O_main_inj_dur_us_new', @averageTen, data)];
 end
