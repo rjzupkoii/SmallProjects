@@ -2,8 +2,9 @@
 %
 % This file contains Mototune specific routines.
 
-function [sheet] = mototune(directory)
-    sheet = [];
+function [] = mototune(directory)
+    global mototuneSheet;
+
     contents = dir(directory);
     for ndx = 1 : length(contents)
         if contents(ndx).isdir
@@ -11,14 +12,17 @@ function [sheet] = mototune(directory)
         end
         path = strcat(directory, '\', contents(ndx).name);
         testNo = extractBetween(contents(ndx).name, 1, strfind(contents(ndx).name, '.') - 1);   
-        sheet = [sheet; process(path, testNo)]; %#ok
+        data = process(path, testNo{1});
+        mototuneSheet = [mototuneSheet; [size(mototuneSheet, 1) + 1, data]]; %#ok
     end 
 end
 
 function [results] = process(file, testNo)
+    % Import the data
     data = importdata(file, '\t');
-    results = [];
-    results = [results, testNo];
+    
+    % Extract the relevent data
+    results = {testNo, extractDate(file)};
     results = [results, extract('D_NOx_exhaust', @averageTen, data)];
     results = [results, extract('D_O2_exhaust', @averageTen, data)];
     results = [results, extract('D_VGT_position48', @averageTen, data)];

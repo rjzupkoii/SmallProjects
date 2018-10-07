@@ -2,8 +2,11 @@
 %
 % This file contains Veristand specific routines.
 
-function [sheet] = veristand(directory)
-    sheet = [];
+function [] = veristand(directory)
+    global veristandSheet;
+    
+%    init();
+    
     contents = dir(directory);
     for ndx = 1 : length(contents)
         if contents(ndx).isdir
@@ -11,16 +14,28 @@ function [sheet] = veristand(directory)
         end
         path = strcat(directory, '\', contents(ndx).name);
         testNo = extractBetween(contents(ndx).name, 1, strfind(contents(ndx).name, '.') - 1);   
-        sheet = [sheet; process(path, testNo)]; %#ok
+        data = process(path, testNo{1});
+        veristandSheet = [veristandSheet; [size(veristandSheet, 1) + 1, data]]; %#ok
     end
 end
 
+function [] = init()
+    global veristandSheet;
+    
+    if isempty(veristandSheet)
+        return
+    end
+    
+end
+
 function [results] = process(file, testNo)
+    % Import the data
     data = importdata(file, ',');
-    results = [];
-    results = [results, testNo];
+    
+    % Extract the relevent data
+    results = {testNo, extractDate(file)};
     results = [results, extract('LFEAirmass', @averageTen, data)];
-    results = [results, extract('AI2_34 Lambda 1', @averageTen, data)];
+    results = [results, extract('AI2_34 Lambda 1', @averageTen, data)^-1];
     results = [results, extract('T2_15 Intake Plenum Below Throttle', @averageTen, data)];
     results = [results, extract('T2_16 EGT 1', @averageTen, data)];
     results = [results, extract('T2_17 EGT 2', @averageTen, data)];

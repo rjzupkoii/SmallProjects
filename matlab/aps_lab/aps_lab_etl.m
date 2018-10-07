@@ -3,41 +3,58 @@
 % Scripting support for extacting relevent data from log files.
 
 % Key working settings
-WORKING_DIR = 'C:\Users\Robert Zupko\git\SmallProjects\matlab\aps_lab\2018.09.19';
+clearvars -global;
+WORKING_DIR = 'C:\Users\Robert Zupko\git\SmallProjects\matlab\aps_lab\';
 
 % Setup the environment
 addpath('./methods');
 warning('OFF', 'MATLAB:mkdir:DirectoryExists');
 warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames')
+warning('OFF', 'MATLAB:xlswrite:AddSheet' ) ;
 
 % Make sure our output exists
 mkdir('out');
 
 % Start by scanning for the directories that we care about
-scanDirectory(WORKING_DIR)
+process(WORKING_DIR)
 
-function [] = scanDirectory(directory)
-    % Find the directories to work with
+function [] = process(directory) 
+    % Prepare the worksheet variables
+    global casSheet horibaSheet mototuneSheet veristandSheet;
+    
+    % Scan the directory provided, process subdirectories that have data
+    for name = getSubDirectories(directory)
+        result = regexp(name, '\d{4}\.\d{2}\.\d{2}');
+        if result{1}
+            path = strcat(directory, '\', name);
+            scanSubDirectory(path{1});
+        end
+    end
+    
+    % Write the worksheets to the s
+	xlswrite('out\asp_lab.xlsx', casSheet, 'CAS');
+    xlswrite('out\asp_lab.xlsx', horibaSheet, 'Horiba');
+    xlswrite('out\asp_lab.xlsx', mototuneSheet, 'Mototune');
+    xlswrite('out\asp_lab.xlsx', veristandSheet, 'Veristand');
+end
+
+function [] = scanSubDirectory(directory)
+    % Find the sub directories to work with
     contents = dir(directory);
     directoryNames = {contents([contents.isdir]).name};
     directoryNames = setxor(directoryNames, {'.', '..'});
     for name = directoryNames        
         % Process the data
-        sheet = [];
         path = strcat(directory, '\', name);
         switch name{1}
             case 'Mototune'
-                sheet = mototune(path{1});
+                mototune(path{1});
             case 'Horiba'
-                sheet = horiba(path{1});
+                horiba(path{1});
             case 'CAS'
-                sheet = cas(path{1});
+                cas(path{1});
             case 'Veristand'
-                sheet = veristand(path{1});
+                veristand(path{1});
         end
-        
-        % Write the data to a worksheet
-        file = strcat('out\', name, '.xlsx');
-        xlswrite(file{1}, sheet)
     end
 end

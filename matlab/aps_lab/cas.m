@@ -2,9 +2,9 @@
 %
 % This file contains CAS specific routines.
 
-function [sheet] = cas(directory)
-    sheet = [];
-
+function [] = cas(directory)
+    global casSheet;
+    
     % CAS files are in subdirectories organized by the test number
     contents = dir(directory);
     for ndx = 1 : length(contents)
@@ -15,7 +15,8 @@ function [sheet] = cas(directory)
             continue
         end
         path = strcat(directory, '\', contents(ndx).name);
-        sheet = [sheet; process(path, contents(ndx).name)]; %#ok
+        data = process(path, contents(ndx).name);
+        casSheet = [casSheet; [size(casSheet, 1) + 1, data]]; %#ok
     end
 end
 
@@ -25,8 +26,7 @@ function [results] = process(directory, testNo)
     data = readtable(path);
     
     % Extract the relevent results
-    results = [];
-    results = [results, str2double(testNo)];
+    results = {testNo, extractDate(directory)};
     results = [results, extract('RPM', data)];  % RPM.Timer
     results = [results, extract('TorqueAverageRT', data)];
     results = [results, extract('CNG_FlowAverageRT', data)];
