@@ -7,13 +7,13 @@ function [] = horiba(directory)
     
     contents = dir(directory);
     for ndx = 1 : length(contents)
-        if contents(ndx).isdir
+        if contents(ndx).isdir || ~endsWith(contents(ndx).name, '.csv')
             continue
         end
         path = strcat(directory, '\', contents(ndx).name);
         testNo = extractBetween(contents(ndx).name, 1, strfind(contents(ndx).name, '.') - 1); 
         data = process(path, testNo{1});
-        horibaSheet = {horibaSheet; [size(horibaSheet, 1) + 1, data]}; %#ok
+        horibaSheet = [horibaSheet; [size(horibaSheet, 1) + 1, data]]; %#ok
     end
 end
 

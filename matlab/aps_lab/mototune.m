@@ -7,7 +7,7 @@ function [] = mototune(directory)
 
     contents = dir(directory);
     for ndx = 1 : length(contents)
-        if contents(ndx).isdir
+        if contents(ndx).isdir || ~endsWith(contents(ndx).name, '.log')
             continue
         end
         path = strcat(directory, '\', contents(ndx).name);

@@ -4,7 +4,7 @@
 
 % Key working settings
 clearvars -global;
-WORKING_DIR = 'C:\Users\Robert Zupko\git\SmallProjects\matlab\aps_lab\';
+WORKING_DIR = 'C:\Users\Robert Zupko\git\SmallProjects\matlab\aps_lab\data';
 
 % Setup the environment
 addpath('./methods');
@@ -31,11 +31,23 @@ function [] = process(directory)
         end
     end
     
-    % Write the worksheets to the s
-	xlswrite('out\asp_lab.xlsx', casSheet, 'CAS');
-    xlswrite('out\asp_lab.xlsx', horibaSheet, 'Horiba');
-    xlswrite('out\asp_lab.xlsx', mototuneSheet, 'Mototune');
-    xlswrite('out\asp_lab.xlsx', veristandSheet, 'Veristand');
+    % Write the worksheets to the XLSX if data is presents
+    if size(casSheet, 1)
+        disp('Writing CAS worksheet to XLSX file');
+        xlswrite('out\asp_lab.xlsx', casSheet, 'CAS');
+    end
+    if size(horibaSheet, 1)
+        disp('Writing Horiba worksheet to XLSX file');
+        xlswrite('out\asp_lab.xlsx', horibaSheet, 'Horiba');
+    end
+    if size(mototuneSheet, 1)
+        disp('Writing Mototune worksheet to XLSX file');
+        xlswrite('out\asp_lab.xlsx', mototuneSheet, 'Mototune');
+    end
+    if size(veristandSheet, 1)
+        disp('Writing Veristand worksheet to XLSX file');
+        xlswrite('out\asp_lab.xlsx', veristandSheet, 'Veristand');
+    end
 end
 
 function [] = scanSubDirectory(directory)
