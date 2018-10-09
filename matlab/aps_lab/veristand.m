@@ -4,12 +4,10 @@
 
 function [] = veristand(directory)
     global veristandSheet;
-    
-%    init();
-    
+        
     contents = dir(directory);
     for ndx = 1 : length(contents)
-        if contents(ndx).isdir
+        if contents(ndx).isdir || ~endsWith('.csv')
             continue
         end
         path = strcat(directory, '\', contents(ndx).name);
