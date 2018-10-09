@@ -17,15 +17,6 @@ function [] = veristand(directory)
     end
 end
 
-function [] = init()
-    global veristandSheet;
-    
-    if isempty(veristandSheet)
-        return
-    end
-    
-end
-
 function [results] = process(file, testNo)
     % Import the data
     data = importdata(file, ',');
