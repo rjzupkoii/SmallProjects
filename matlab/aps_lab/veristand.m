@@ -7,7 +7,7 @@ function [] = veristand(directory)
         
     contents = dir(directory);
     for ndx = 1 : length(contents)
-        if contents(ndx).isdir || ~endsWith('.csv')
+        if contents(ndx).isdir || ~endsWith(contents(ndx).name, '.csv')
             continue
         end
         path = strcat(directory, '\', contents(ndx).name);

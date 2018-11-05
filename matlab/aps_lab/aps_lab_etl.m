@@ -9,8 +9,8 @@ WORKING_DIR = 'C:\Users\Robert Zupko\git\SmallProjects\matlab\aps_lab\data';
 % Setup the environment
 addpath('./methods');
 warning('OFF', 'MATLAB:mkdir:DirectoryExists');
-warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames')
-warning('OFF', 'MATLAB:xlswrite:AddSheet' ) ;
+warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames');
+warning('OFF', 'MATLAB:xlswrite:AddSheet');
 
 % Make sure our output exists
 mkdir('out');
