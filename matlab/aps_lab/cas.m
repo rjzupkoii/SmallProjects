@@ -5,6 +5,14 @@
 function [] = cas(directory)
     global casSheet;
     
+    % Set the column headers if this is a new sheet
+    if ~size(casSheet, 1)
+        casSheet = {'Number', 'TestNo', 'Date'};
+        for row = getColumns.'
+            casSheet = [casSheet, row{1}];    %#ok
+        end
+    end
+        
     % CAS files are in subdirectories organized by the test number
     contents = dir(directory);
     for ndx = 1 : length(contents)
@@ -16,8 +24,31 @@ function [] = cas(directory)
         end
         path = strcat(directory, '\', contents(ndx).name);
         data = process(path, contents(ndx).name);
-        casSheet = [casSheet; [size(casSheet, 1) + 1, data]]; %#ok
+        casSheet = [casSheet; [size(casSheet, 1), data]]; %#ok
     end
+end
+
+function [columns] = getColumns() 
+    columns = {'RPM', 'Mean';  % RPM.Timer
+               'TorqueAverageRT', 'Mean';
+               'CNG_FlowAverageRT', 'Mean';
+               'Diesel_FlowAverageRT', 'Mean';
+               'MAPAverageRT', 'Mean';
+               'Cyl4IMEPRT', 'Mean';
+               'Cyl5IMEPRT', 'Mean';
+               'Cyl6IMEPRT', 'Mean';
+               'Cyl4IMEPRT', 'COV';
+               'Cyl5IMEPRT', 'COV';
+               'Cyl6IMEPRT', 'COV';
+               'Cyl4PeakRT', 'Mean';
+               'Cyl5PeakRT', 'Mean';
+               'Cyl6PeakRT', 'Mean';
+               'Cyl4Peak LocRT', 'Mean';
+               'Cyl5Peak LocRT', 'Mean';
+               'Cyl6Peak LocRT', 'Mean';
+               'Cyl4PMEPRT', 'Mean';
+               'Cyl5PMEPRT', 'Mean';
+               'Cyl6PMEPRT', 'Mean'};
 end
 
 function [results] = process(directory, testNo)
@@ -27,34 +58,12 @@ function [results] = process(directory, testNo)
     
     % Extract the relevent results
     results = {testNo, extractDate(directory)};
-    results = [results, extract('RPM', data)];  % RPM.Timer
-    results = [results, extract('TorqueAverageRT', data)];
-    results = [results, extract('CNG_FlowAverageRT', data)];
-    results = [results, extract('Diesel_FlowAverageRT', data)];
-    results = [results, extract('MAPAverageRT', data)];
-    results = [results, extract('Cyl4IMEPRT', data)];
-    results = [results, extract('Cyl5IMEPRT', data)];
-    results = [results, extract('Cyl6IMEPRT', data)];
-    results = [results, extract('Cyl4IMEPRT', data, 'COV')];
-    results = [results, extract('Cyl5IMEPRT', data, 'COV')];
-    results = [results, extract('Cyl6IMEPRT', data, 'COV')];
-    results = [results, extract('Cyl4PeakRT', data)];
-    results = [results, extract('Cyl5PeakRT', data)];
-    results = [results, extract('Cyl6PeakRT', data)];
-    results = [results, extract('Cyl4Peak LocRT', data)];
-    results = [results, extract('Cyl5Peak LocRT', data)];
-    results = [results, extract('Cyl6Peak LocRT', data)];
-    results = [results, extract('Cyl4PMEPRT', data)];
-    results = [results, extract('Cyl5PMEPRT', data)];
-    results = [results, extract('Cyl6PMEPRT', data)];
+    for row = getColumns.'
+        results = [results, extract(row{1}, data, row{2})]; %#ok
+    end
 end
 
 function [result] = extract(parameter, table, column)
-    % Default to the mean
-    if ~exist('column', 'var')
-        column = 'Mean';
-    end
-
     ndx = find(not(cellfun('isempty', strfind(table.Parameter, parameter))));
     if isempty(ndx)
         disp(['WARNING: column ', parameter, ' not found']);

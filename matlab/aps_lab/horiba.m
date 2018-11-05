@@ -5,6 +5,15 @@
 function [] = horiba(directory)
     global horibaSheet;
     
+    % Set the column headers if this is a new sheet
+    if ~size(horibaSheet, 1)
+        horibaSheet = {};
+        columns = getColumns();
+        for ndx = 1:length(columns)
+            horibaSheet = [horibaSheet, columns{ndx}];    %#ok
+        end
+    end
+    
     contents = dir(directory);
     for ndx = 1 : length(contents)
         if contents(ndx).isdir || ~endsWith(contents(ndx).name, '.csv')
@@ -15,6 +24,11 @@ function [] = horiba(directory)
         data = process(path, testNo{1});
         horibaSheet = [horibaSheet; [size(horibaSheet, 1) + 1, data]]; %#ok
     end
+end
+
+function [columns] = getColumns() 
+    columns = {'Number', 'TestNo', 'Date', ...
+               'Lambda', 'NO/NOx', 'THC', 'CO-L', 'CO2', 'O2' };
 end
 
 function [results] = process(file, testNo)
