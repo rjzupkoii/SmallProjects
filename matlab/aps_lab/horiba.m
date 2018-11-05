@@ -22,7 +22,7 @@ function [] = horiba(directory)
         path = strcat(directory, '\', contents(ndx).name);
         testNo = extractBetween(contents(ndx).name, 1, strfind(contents(ndx).name, '.') - 1); 
         data = process(path, testNo{1});
-        horibaSheet = [horibaSheet; [size(horibaSheet, 1) + 1, data]]; %#ok
+        horibaSheet = [horibaSheet; [size(horibaSheet, 1), data]]; %#ok
     end
 end
 

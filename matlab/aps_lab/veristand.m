@@ -22,7 +22,7 @@ function [] = veristand(directory)
         path = strcat(directory, '\', contents(ndx).name);
         testNo = extractBetween(contents(ndx).name, 1, strfind(contents(ndx).name, '.') - 1);   
         data = process(path, testNo{1});
-        veristandSheet = [veristandSheet; [size(veristandSheet, 1) + 1, data]]; %#ok
+        veristandSheet = [veristandSheet; [size(veristandSheet, 1), data]]; %#ok
     end
 end
 
