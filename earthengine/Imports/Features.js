@@ -51,7 +51,7 @@ var water =
                   [107.21754025051449, 15.04320626350342]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "0"
             }),
         ee.Feature(
@@ -62,7 +62,7 @@ var water =
                   [107.23298977444027, 14.963617705395324]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "1"
             }),
         ee.Feature(
@@ -73,7 +73,7 @@ var water =
                   [107.15917538235043, 15.012037608761254]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "2"
             }),
         ee.Feature(
@@ -84,7 +84,7 @@ var water =
                   [107.19694088528011, 14.94753058943139]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "3"
             }),
         ee.Feature(
@@ -95,7 +95,7 @@ var water =
                   [107.12752085241277, 14.893813693945585]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "4"
             }),
         ee.Feature(
@@ -106,7 +106,7 @@ var water =
                   [107.12524633916814, 14.892362114688936]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "5"
             }),
         ee.Feature(
@@ -117,7 +117,7 @@ var water =
                   [107.09585801605856, 14.837257090492427]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "6"
             }),
         ee.Feature(
@@ -128,7 +128,7 @@ var water =
                   [106.8315079827367, 14.8028374853076]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "7"
             }),
         ee.Feature(
@@ -139,7 +139,7 @@ var water =
                   [107.56562945442451, 14.025859479654736]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "8"
             }),
         ee.Feature(
@@ -150,7 +150,7 @@ var water =
                   [107.52872225837959, 13.98555240493395]]], null, false),
             {
               "type": "water",
-              "class": 0,
+              "class": 10,
               "system:index": "9"
             })]),
     forest = 
@@ -209,7 +209,7 @@ var water =
                   [106.58972474752811, 14.729582688087001]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "0"
             }),
         ee.Feature(
@@ -220,7 +220,7 @@ var water =
                   [106.67631753774899, 14.773662923378787]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "1"
             }),
         ee.Feature(
@@ -231,7 +231,7 @@ var water =
                   [106.71526820232398, 14.80074280940808]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "2"
             }),
         ee.Feature(
@@ -242,7 +242,7 @@ var water =
                   [106.71114832927711, 14.843142887279363]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "3"
             }),
         ee.Feature(
@@ -253,7 +253,7 @@ var water =
                   [106.76544900903862, 14.897698866793547]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "4"
             }),
         ee.Feature(
@@ -264,7 +264,7 @@ var water =
                   [106.58099700741452, 14.780397523893043]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "5"
             }),
         ee.Feature(
@@ -275,7 +275,7 @@ var water =
                   [106.51010085873288, 14.781393408970233]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "6"
             }),
         ee.Feature(
@@ -286,7 +286,7 @@ var water =
                   [106.47731353573484, 14.78421505855089]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "7"
             }),
         ee.Feature(
@@ -297,7 +297,7 @@ var water =
                   [106.4948961557312, 14.812524764691322]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "8"
             }),
         ee.Feature(
@@ -308,7 +308,7 @@ var water =
                   [106.48614142550659, 14.855503268342085]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "9"
             }),
         ee.Feature(
@@ -319,7 +319,7 @@ var water =
                   [106.65253282672096, 14.688717657736056]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "10"
             }),
         ee.Feature(
@@ -330,7 +330,7 @@ var water =
                   [107.36764114137797, 14.98590097697006]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "11"
             }),
         ee.Feature(
@@ -341,7 +341,7 @@ var water =
                   [107.33127837176059, 14.11371546341699]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "12"
             }),
         ee.Feature(
@@ -352,7 +352,7 @@ var water =
                   [106.99561190304665, 14.35953577472716]]], null, false),
             {
               "type": "Forest",
-              "class": 1,
+              "class": 11,
               "system:index": "13"
             })]),
     vegetation = 
@@ -398,7 +398,7 @@ var water =
                   [106.24033384096822, 14.20051529488595],
                   [106.24033384096822, 14.207837478045171]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "0"
             }),
@@ -409,7 +409,7 @@ var water =
                   [106.19606355059473, 14.166124294845906],
                   [106.19606355059473, 14.173614024884444]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "1"
             }),
@@ -420,7 +420,7 @@ var water =
                   [106.26554379015846, 13.962972844591976],
                   [106.26554379015846, 13.96788717073196]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "2"
             }),
@@ -431,7 +431,7 @@ var water =
                   [106.71532070622888, 15.050222393126703],
                   [106.71532070622888, 15.053289174319925]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "3"
             }),
@@ -442,7 +442,7 @@ var water =
                   [107.39414624058604, 14.112616292211145],
                   [107.39414624058604, 14.114666072340318]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "4"
             }),
@@ -453,7 +453,7 @@ var water =
                   [107.26415116677192, 14.026657646219114],
                   [107.26415116677192, 14.030654642441101]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "5"
             }),
@@ -464,7 +464,7 @@ var water =
                   [107.61212777461265, 13.865372890514598],
                   [107.61212777461265, 13.871789189483888]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "6"
             }),
@@ -475,7 +475,7 @@ var water =
                   [107.11558534068429, 14.762103595619898],
                   [107.11558534068429, 14.768369824155798]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "7"
             }),
@@ -486,7 +486,7 @@ var water =
                   [107.1233967121884, 14.7214570601514],
                   [107.1233967121884, 14.729177141279287]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "8"
             }),
@@ -497,7 +497,7 @@ var water =
                   [107.12124165025786, 14.820834445588837],
                   [107.12124165025786, 14.823821529987507]]], null, false),
             {
-              "class": 2,
+              "class": 12,
               "type": "Vegetation",
               "system:index": "9"
             })]),
@@ -544,7 +544,7 @@ var water =
                   [106.14062425795458, 13.8619857596154],
                   [106.14062425795458, 13.864735663878157]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "0"
             }),
@@ -555,7 +555,7 @@ var water =
                   [106.07395409366097, 13.996161425759373],
                   [106.07395409366097, 14.001491446589275]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "1"
             }),
@@ -566,7 +566,7 @@ var water =
                   [106.22717323125796, 14.185272594989152],
                   [106.22717323125796, 14.190847835676925]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "2"
             }),
@@ -577,7 +577,7 @@ var water =
                   [106.33259805425611, 14.119107318586817],
                   [106.33259805425611, 14.122228714889884]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "3"
             }),
@@ -588,7 +588,7 @@ var water =
                   [106.3310101865193, 14.132341744999293],
                   [106.3310101865193, 14.135046800337468]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "4"
             }),
@@ -599,7 +599,7 @@ var water =
                   [107.77754983394081, 14.413841317966888],
                   [107.77754983394081, 14.415420763383555]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "5"
             }),
@@ -610,7 +610,7 @@ var water =
                   [107.76720723597938, 14.415379199173858],
                   [107.76720723597938, 14.417000197608678]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "6"
             }),
@@ -621,7 +621,7 @@ var water =
                   [106.35734038779096, 14.870661537211344],
                   [106.35734038779096, 14.874643389153947]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "7"
             }),
@@ -632,7 +632,7 @@ var water =
                   [106.40254109612472, 14.75952346919378],
                   [106.40254109612472, 14.765167299752758]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "8"
             }),
@@ -643,7 +643,7 @@ var water =
                   [106.47463887444503, 14.716359926069886],
                   [106.47463887444503, 14.721008718477064]]], null, false),
             {
-              "class": 3,
+              "class": 13,
               "type": "Scrub",
               "system:index": "9"
             })]),
@@ -696,7 +696,7 @@ var water =
                   [106.70866519596294, 14.703375521619938],
                   [106.70866519596294, 14.707567990045707]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "0"
             }),
@@ -707,7 +707,7 @@ var water =
                   [106.71347171451762, 14.698684842718498],
                   [106.71347171451762, 14.701839646701988]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "1"
             }),
@@ -718,7 +718,7 @@ var water =
                   [106.71170354587343, 14.733426682605591],
                   [106.71170354587343, 14.737203538270531]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "2"
             }),
@@ -729,7 +729,7 @@ var water =
                   [106.77404471460991, 14.738010214104287],
                   [106.77404471460991, 14.741288957622373]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "3"
             }),
@@ -740,7 +740,7 @@ var water =
                   [106.7178015629485, 14.692528846953913],
                   [106.7178015629485, 14.696430944646046]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "4"
             }),
@@ -751,7 +751,7 @@ var water =
                   [107.00665615314603, 14.783720151603834],
                   [107.00665615314603, 14.787952566860822]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "5"
             }),
@@ -762,7 +762,7 @@ var water =
                   [107.05736823013258, 14.756486713059987],
                   [107.05736823013258, 14.762545609988681]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "6"
             }),
@@ -773,7 +773,7 @@ var water =
                   [107.68920527832127, 13.81464036764405],
                   [107.68920527832127, 13.818265972635697]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "7"
             }),
@@ -784,7 +784,7 @@ var water =
                   [107.67530070678806, 13.803138075054115],
                   [107.67530070678806, 13.806513806717096]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "8"
             }),
@@ -795,7 +795,7 @@ var water =
                   [107.68837167740094, 13.818780029293867],
                   [107.68837167740094, 13.821738808010167]]], null, false),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "9"
             }),
@@ -807,7 +807,7 @@ var water =
                   [106.48016711722703, 15.102849498726858],
                   [106.47583266745896, 15.104341082720238]]]),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "10"
             }),
@@ -826,7 +826,7 @@ var water =
                   [106.49400171385079, 15.09365347863635],
                   [106.4944523249653, 15.092120384454091]]]),
             {
-              "class": 4,
+              "class": 21,
               "type": "Agricultural",
               "system:index": "11"
             })]),
@@ -873,7 +873,7 @@ var water =
                   [106.7888729582661, 14.759793680557006],
                   [106.7888729582661, 14.763445583108666]]], null, false),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "0"
             }),
@@ -884,7 +884,7 @@ var water =
                   [106.78363728626903, 14.773529495427631],
                   [106.78363728626903, 14.777513134305407]]], null, false),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "1"
             }),
@@ -895,7 +895,7 @@ var water =
                   [106.84235198645824, 14.854557251504966],
                   [106.84235198645824, 14.858124596746793]]], null, false),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "2"
             }),
@@ -906,7 +906,7 @@ var water =
                   [106.83960540442699, 14.872476343677278],
                   [106.83960540442699, 14.875960438837689]]], null, false),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "3"
             }),
@@ -920,7 +920,7 @@ var water =
                   [107.57903588991897, 13.764898594283817],
                   [107.5778342602803, 13.765482153112684]]]),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "4"
             }),
@@ -932,7 +932,7 @@ var water =
                   [107.57474435549514, 13.769066839686149],
                   [107.57315648775833, 13.767024408722456]]]),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "5"
             }),
@@ -943,7 +943,7 @@ var water =
                   [107.66778482180374, 13.797992414340495],
                   [107.66778482180374, 13.800909780539556]]], null, false),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "6"
             }),
@@ -960,7 +960,7 @@ var water =
                   [107.65624059420364, 13.818038151499191],
                   [107.65439523440139, 13.818079824832537]]]),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "7"
             }),
@@ -975,7 +975,7 @@ var water =
                   [107.62534154635208, 13.784089915682298],
                   [107.62096418123977, 13.780713859648857]]]),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "8"
             }),
@@ -986,7 +986,7 @@ var water =
                   [106.76128400545852, 14.769300573190613],
                   [106.76128400545852, 14.772703335512462]]], null, false),
             {
-              "class": 5,
+              "class": 22,
               "type": "Agricultural - Fallow",
               "system:index": "9"
             })]),
@@ -1033,7 +1033,7 @@ var water =
                   [106.64536990322506, 14.928667566019357],
                   [106.64536990322506, 14.931736089948803]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "0"
             }),
@@ -1044,7 +1044,7 @@ var water =
                   [106.59651800591182, 14.952620306268578],
                   [106.59651800591182, 14.95477633036255]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "1"
             }),
@@ -1055,7 +1055,7 @@ var water =
                   [106.59836336571406, 14.937112879432128],
                   [106.59836336571406, 14.939269059300129]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "2"
             }),
@@ -1066,7 +1066,7 @@ var water =
                   [106.63516345513784, 14.916566063321916],
                   [106.63516345513784, 14.922081392183458]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "3"
             }),
@@ -1077,7 +1077,7 @@ var water =
                   [106.67744548550819, 14.908686776761677],
                   [106.67744548550819, 14.911714115733844]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "4"
             }),
@@ -1088,7 +1088,7 @@ var water =
                   [106.67100818387244, 14.883885876781521],
                   [106.67100818387244, 14.887535686712965]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "5"
             }),
@@ -1099,7 +1099,7 @@ var water =
                   [106.66705997220252, 14.86414265229876],
                   [106.66705997220252, 14.867585403421858]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "6"
             }),
@@ -1110,7 +1110,7 @@ var water =
                   [106.65285499325965, 14.857091062954579],
                   [106.65285499325965, 14.86036800664443]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "7"
             }),
@@ -1121,7 +1121,7 @@ var water =
                   [106.65345580807899, 14.873931535660253],
                   [106.65345580807899, 14.87700083983302]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "8"
             }),
@@ -1132,7 +1132,7 @@ var water =
                   [106.69190262422524, 14.89007648093508],
                   [106.69190262422524, 14.892523449130978]]], null, false),
             {
-              "class": 6,
+              "class": 14,
               "type": "Barren",
               "system:index": "9"
             })]),
@@ -1179,7 +1179,7 @@ var water =
                   [106.83813803074187, 14.804736694807673],
                   [106.83813803074187, 14.808346351486717]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "0"
             }),
@@ -1190,7 +1190,7 @@ var water =
                   [106.84976808903045, 14.80448775075206],
                   [106.84976808903045, 14.808138901581568]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "1"
             }),
@@ -1201,7 +1201,7 @@ var water =
                   [106.93469975517016, 14.811141645760946],
                   [106.93469975517016, 14.812697493649933]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "2"
             }),
@@ -1212,7 +1212,7 @@ var water =
                   [106.9380042366765, 14.813755463832791],
                   [106.9380042366765, 14.815041616704722]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "3"
             }),
@@ -1223,7 +1223,7 @@ var water =
                   [106.92083913740274, 14.80033668333215],
                   [106.92083913740274, 14.801830371975951]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "4"
             }),
@@ -1234,7 +1234,7 @@ var water =
                   [106.95139245114764, 14.827697761223813],
                   [106.95139245114764, 14.82914977525033]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "5"
             }),
@@ -1253,7 +1253,7 @@ var water =
                   [107.05464629775052, 14.79117442377728],
                   [107.03683642989164, 14.79573863290313]]]),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "6"
             }),
@@ -1264,7 +1264,7 @@ var water =
                   [107.6974560603946, 13.797610035511108],
                   [107.6974560603946, 13.80223613540861]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "7"
             }),
@@ -1275,7 +1275,7 @@ var water =
                   [107.60123985861237, 13.775186738577714],
                   [107.60123985861237, 13.77881295668312]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "8"
             }),
@@ -1286,7 +1286,7 @@ var water =
                   [107.60111111257966, 13.723705051755417],
                   [107.60111111257966, 13.726873482230307]]], null, false),
             {
-              "class": 7,
+              "class": 20,
               "type": "Development",
               "system:index": "9"
             })]),
@@ -1327,7 +1327,7 @@ var water =
                   [106.06456198285417, 13.840741268775988],
                   [106.06456198285417, 13.844283129951554]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "0"
             }),
@@ -1338,7 +1338,7 @@ var water =
                   [106.06971182416277, 13.850158333611363],
                   [106.06971182416277, 13.853116713273174]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "1"
             }),
@@ -1349,7 +1349,7 @@ var water =
                   [106.04833268628022, 13.863531024182631],
                   [106.04833268628022, 13.86561427411211]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "2"
             }),
@@ -1360,7 +1360,7 @@ var water =
                   [106.43113082633957, 13.685470666623182],
                   [106.43113082633957, 13.68695090337319]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "3"
             }),
@@ -1371,7 +1371,7 @@ var water =
                   [106.42454332099899, 13.68298968555346],
                   [106.42454332099899, 13.68432399795115]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "4"
             }),
@@ -1382,7 +1382,7 @@ var water =
                   [107.4572430900017, 13.679136299441993],
                   [107.4572430900017, 13.683097582121652]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "5"
             }),
@@ -1393,7 +1393,7 @@ var water =
                   [107.26355991411725, 13.559623048632824],
                   [107.26355991411725, 13.563586334054703]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "6"
             }),
@@ -1404,7 +1404,7 @@ var water =
                   [106.52024456303178, 13.66944883803109],
                   [106.52024456303178, 13.670699828068331]]], null, false),
             {
-              "class": 8,
+              "class": 1,
               "type": "Burned / Fire",
               "system:index": "7"
             })]);

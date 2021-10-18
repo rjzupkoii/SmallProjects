@@ -20,10 +20,9 @@ var layerStyles = [
 exports.landsatRGB = { bands: ['SR_B4', 'SR_B3', 'SR_B2'], min: 6983, max: 13309 };
 exports.landsatCIR = { bands: ['SR_B5', 'SR_B4', 'SR_B3'], min: 8095, max: 19581 };
 
-exports.rainfall =  { 
-min: 1091, max: 3112, 
-palette: ['#ffffcc','#a1dab4','#41b6c4','#2c7fb8','#253494'] 
-};
+exports.habitat = { min: 0, max: 3, palette: ['blue', 'yellow', 'orange', 'red'] };
+exports.rainfall =  { min: 1091, max: 3112, palette: ['#ffffcc','#a1dab4','#41b6c4','#2c7fb8','#253494'] };
+exports.trainingPalette = { min: 0, max: 8, palette: ['blue', 'darkgreen', 'green', 'darkseagreen', 'wheat', 'linen', 'brown', 'red', 'black'] };
 
 exports.temperature = {
 min: 19.1,  max: 36.1,
@@ -34,10 +33,6 @@ palette: [
   'fff705', 'ffd611', 'ffb613', 'ff8b13', 'ff6e08', 'ff500d',
   'ff0000', 'de0101', 'c21301', 'a71001', '911003'
 ],
-};
-
-exports.trainingPalette = { min: 0, max: 8,
-palette: ['blue', 'darkgreen', 'green', 'darkseagreen', 'wheat', 'linen', 'brown', 'red', 'black'],
 };
 
 /* Adds a layer to the map for each of the training data polygon categories defined. */

@@ -12,47 +12,89 @@ var features = require('users/rzupko/GEOG883:Imports/Features');
 var processing = require('users/rzupko/GEOG883:Imports/Processing');
 
 // Filter the USGS Landsat 8 Level 2, Collection 2, Tier 1collection to the selected image
-var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+var image = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
   .filter(ee.Filter.and(
     ee.Filter.eq('WRS_PATH', 125),
     ee.Filter.eq('WRS_ROW', 50)))
-  .filterDate('2020-01-21', '2020-01-23');
-var image = landsat.first();
-var aoi = image.geometry();
+  .filterDate('2020-01-21', '2020-01-23').first();
+var results = processing.process(image);
 
-// Center the map and show the imagery
-Map.centerObject(landsat, 8);
-Map.addLayer(landsat, visual.landsatRGB, 'Landsat 8 (RGB, 4-3-2)');
+var landsat = ee.ImageCollection.fromImages([image]);
+var malaria = ee.ImageCollection.fromImages([results]);
 
-// Load and display the annual rainfall
-var annualRainfall = processing.annualRainfall(aoi);
-Map.addLayer(annualRainfall, visual.rainfall, 'Annual Precipitation (mm)');
+image = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+  .filter(ee.Filter.and(
+    ee.Filter.eq('WRS_PATH', 125),
+    ee.Filter.eq('WRS_ROW', 51)))
+  .filterDate('2014-01-04', '2014-01-06').first();
+results = processing.process(image);
 
-// Load and display the mean temperature
-var meanTemperature = processing.meanTemperature(aoi);
-Map.addLayer(meanTemperature, visual.temperature, 'Mean Land Surface Temperature (C)');
+landsat = landsat.merge(ee.ImageCollection.fromImages([image]));
+malaria = malaria.merge(ee.ImageCollection.fromImages([results]));
 
-// Classify the Landsat image render it
-var classified = processing.classifyLandcover(image);
-Map.addLayer(classified, visual.trainingPalette, 'Land Use Classification');
+visualize(landsat, malaria, false);
+queueExports(landsat, results);
 
-function queueExports() {
+function queueExports(landsat, results) {
+  // Landsat 8 imagery
   Export.image.toDrive({
-    image: classified,
-    description: 'EE_Classified_LS8_Export',
+    image: landsat,
+    description: 'EE_LS8_Export',
     folder: 'Earth Engine',
     region: landsat.geometry()
-  });
+  });    
+
+  // Inputs for the habitat classification
   Export.image.toDrive({
-    image: annualRainfall,
+    image: results.select('landcover'),
+    description: 'EE_Classified_LS8_Export',
+    folder: 'Earth Engine',
+    region: results.geometry()
+  });  
+  Export.image.toDrive({
+    image: results.select('annual_rainfall'),
     description: 'EE_AnnualRainfall_CHIRPS_Export',
     folder: 'Earth Engine',
-    region: annualRainfall.geometry()
+    region: results.geometry()
   });
   Export.image.toDrive({
-    image: meanTemperature,
+    image: results.select('mean_temperature'),
     description: 'EE_MeanTemperature_MODIS_Export',
     folder: 'Earth Engine',
-    region: meanTemperature.geometry()
+    region: results.geometry()
   });
+  Export.image.toDrive({
+    image: results.select('temperature_bounds'),
+    description: 'EE_TemperatureBounds_Export',
+    folder: 'Earth Engine',
+    region: results.geometry()
+  });  
+  
+  // Final malaria risk products
+  Export.image.toDrive({
+    image: results.select('habitat'),
+    description: 'EE_Habitat_Export',
+    folder: 'Earth Engine',
+    region: results.geometry()
+  }); 
+  Export.image.toDrive({
+    image: results.select('risk'),
+    description: 'EE_Risk_Export',
+    folder: 'Earth Engine',
+    region: results.geometry()
+  });   
+}
+
+function visualize(landsat, image, showInputs) {
+  Map.centerObject(landsat, 8);
+  Map.addLayer(landsat, visual.landsatRGB, 'Landsat 8 (RGB, 4-3-2)');
+  Map.addLayer(image.select('habitat'), visual.habitat, 'Habitat (A. dirus)');
+  Map.addLayer(image.select('risk'), visual.habitat, 'Malaria Risk');
+  
+  if (showInputs) {
+    Map.addLayer(image.select('landcover'), visual.trainingPalette, 'Land Use Classification');    
+    Map.addLayer(image.select('annual_rainfall'), visual.rainfall, 'Annual Precipitation (mm)');
+    Map.addLayer(image.select('mean_temperature'), visual.temperature, 'Mean Land Surface Temperature (C)');
+    Map.addLayer(image.select('temperature_bounds'), {min: 0, max: 366}, 'Days Outside of Temperature Bounds');
+  }
 }
