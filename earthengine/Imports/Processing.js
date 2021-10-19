@@ -101,8 +101,7 @@ function habitatClassification(inputs) {
   
   // Merge the classifications and return
   var habitat = ee.Image(0).expression('primary + secondary + tertiary', {primary: primary, secondary: secondary, tertiary: tertiary});
-  habitat = habitat.rename('Habitat_Classification');
-  return habitat.clip(inputs.aoi);
+  return habitat.rename('Habitat_Classification');
 }
 
 // Get the mean temperature from the MOD11A1.006 dataset for 2019
@@ -121,6 +120,7 @@ function meanTemperature(aoi) {
   });
   collection = collection.select('LST_Day_1km_celsius');
   
+  // Reduce and return
   return collection.reduce(ee.Reducer.mean());
 }
 
@@ -167,10 +167,6 @@ function temperatureBounds(aoi, minimum, maximum) {
   });
   collection = collection.select('Outside_Bounds');
   
-  // Shouldn't have to clip twice, but not doing so seems to result in zeros outside of the original AOI
-  collection = collection.map(function(image) {
-    return image.clip(aoi);
-  });
-  
+  // Reduce and return  
   return collection.reduce(ee.Reducer.sum()).toInt();  
 }
