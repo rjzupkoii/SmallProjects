@@ -1,8 +1,12 @@
 /*
  * Processing.js
  *
- * This script is intended as a library that contains the functions 
- * needed to perform the actual processing for the imagery.
+ * This script is intended as a library that contains the functions needed to
+ * perform the actual processing for the imagery. Since only the process method
+ * is exported there is some information hiding taking place even though we 
+ * aren't really doing OOP. Also, since this is a proof of concept, there is 
+ * still a bit of hard coding in place, ideally the parameterization for the 
+ * species would be passed to process() along with the relevant date ranges.
  */
 var features = require('users/rzupko/GEOG883:Imports/Features');
 
@@ -14,7 +18,7 @@ exports.process = function(image) {
   var results = annualRainfall(aoi).rename('annual_rainfall');
   results = results.addBands(meanTemperature(aoi).rename('mean_temperature'));
   results = results.addBands(temperatureBounds(aoi, 11, 28).rename('temperature_bounds')); // Bounds: 11 C <= temperature <= 28 C
-  results = results.addBands(classifyLandcover(image).rename('landcover'));
+  results = results.addBands(classifyLandCover(image).rename('landcover'));
   
   // Perform the habitat classification
   var habitat = habitatClassification({
@@ -42,9 +46,11 @@ function annualRainfall(aoi) {
   return collection.reduce(ee.Reducer.sum());
 }
 
-// Classify the landcover for the image provided
-function classifyLandcover(image) {
-  // Load the training data
+// Classify the land cover for the image provided
+function classifyLandCover(image) {
+  // Load the training data note that we are loading the training image each
+  // time the method runs so this could be improved a bit by just passing the
+  // classifier around
   var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
     .filter(ee.Filter.and(
       ee.Filter.eq('WRS_PATH', 125),
@@ -81,7 +87,7 @@ function habitatClassification(inputs) {
     minTemp: inputs.minimumMeanTemperature,
     bounds: inputs.bounds};
   
-  // Primary habitat is completely within the enviornmetnal envelope
+  // Primary habitat is completely within the environmental envelope
   var primary = ee.Image(0).expression('(rainfall > minRainfall) && (temperature >= minTemp) && (bounds == 0)', variables);
     
   // Secondary is within the envelope for the life expectancy of an active female (43 days)
@@ -116,7 +122,9 @@ function meanTemperature(aoi) {
 }
 
 function riskAssessment(landcover, habitat) {
-  // Generate the 5 km buffer based upon the landcover type
+  // Generate the 5 km buffer based upon the land cover type, using cumulative 
+  // cost for the buffer isn't exactly the same as a buffer, but results in
+  // the same effect
   var buffer = ee.Image(0).expression('landcover >= 20', {landcover: landcover});
   buffer = ee.Image(1).cumulativeCost({
     source: buffer, 
@@ -127,7 +135,8 @@ function riskAssessment(landcover, habitat) {
   // High risk are areas where humans likely live along side mosquitos
   var high = ee.Image(0).expression('(landcover >= 20) && (habitat > 1)', {landcover: landcover, habitat: habitat});
   
-  // Moderate risk is mosquito habitat with 5km of humans
+  // Moderate risk is mosquito habitat with 5km of humans, 
+  // note ternary operator to force a value with the mask 
   var moderate = ee.Image(0).expression('masked > 1 ? 1 : 0', {masked: masked});      
   
   // Low risk is mosquito habitat
@@ -149,12 +158,13 @@ function temperatureBounds(aoi, minimum, maximum) {
   collection = collection.map(function(image) {
     var kelvin = image.select('LST_Day_1km');
     var celsius = ee.Image(0).expression('kelvin * 0.02 - 273.15', {kelvin: kelvin});
-    var count = ee.Image(0).expression('(celsius < 11) || (celsius > 28)', {celsius: celsius});
+    var count = ee.Image(0).expression('(celsius < minimum) || (celsius > maximum)', 
+      {celsius: celsius, minimum: minimum, maximum: maximum});
     return image.addBands(count.rename('Outside_Bounds'));
   });
   collection = collection.select('Outside_Bounds');
   
-  // Shouldn't have to clip twice, but not doing so seems to result in zeros outside of the orginal AOI
+  // Shouldn't have to clip twice, but not doing so seems to result in zeros outside of the original AOI
   collection = collection.map(function(image) {
     return image.clip(aoi);
   });

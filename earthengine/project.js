@@ -8,10 +8,11 @@
 
 // Import relevant scripts and data
 var visual = require('users/rzupko/GEOG883:Imports/Visualization');
-var features = require('users/rzupko/GEOG883:Imports/Features');
 var processing = require('users/rzupko/GEOG883:Imports/Processing');
 
-// Filter the USGS Landsat 8 Level 2, Collection 2, Tier 1collection to the selected image
+// Filter the USGS Landsat 8 Level 2, Collection 2, Tier 1 collection to the 
+// selected image for the proof of concept (125, 50, 2020-01-22); an 
+// alternative cloud-free image is (125, 51, 2014-01-05)
 var image = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
   .filter(ee.Filter.and(
     ee.Filter.eq('WRS_PATH', 125),
@@ -19,19 +20,16 @@ var image = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
   .filterDate('2020-01-21', '2020-01-23').first();
 var results = processing.process(image);
 
+// By adding the Landsat and malaria results to image collections we have a 
+// hook for future projects to use additional images additional images can
+// be appended to the collection via:
+//
+// landsat = landsat.merge(ee.ImageCollection.fromImages([image]));
+// malaria = malaria.merge(ee.ImageCollection.fromImages([results]));
 var landsat = ee.ImageCollection.fromImages([image]);
 var malaria = ee.ImageCollection.fromImages([results]);
 
-image = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
-  .filter(ee.Filter.and(
-    ee.Filter.eq('WRS_PATH', 125),
-    ee.Filter.eq('WRS_ROW', 51)))
-  .filterDate('2014-01-04', '2014-01-06').first();
-results = processing.process(image);
-
-landsat = landsat.merge(ee.ImageCollection.fromImages([image]));
-malaria = malaria.merge(ee.ImageCollection.fromImages([results]));
-
+// Visualize and export the results of the proof of concept
 visualize(landsat, malaria, false);
 queueExports(landsat, results);
 
@@ -44,7 +42,8 @@ function queueExports(landsat, results) {
     region: landsat.geometry()
   });    
 
-  // Inputs for the habitat classification
+  // Inputs for the habitat classification, this could  be a single image but
+  // for processing in ArcGIS it is a bit easier to have each band as an image
   Export.image.toDrive({
     image: results.select('landcover'),
     description: 'EE_Classified_LS8_Export',
