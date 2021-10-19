@@ -31,25 +31,20 @@ var malaria = ee.ImageCollection.fromImages([results]);
 
 // Visualize and export the results of the proof of concept
 visualize(landsat, malaria, false);
-queueExports(landsat, results);
+queueExports(results);
 
-function queueExports(landsat, results) {
-  // Landsat 8 imagery
-  Export.image.toDrive({
-    image: landsat,
-    description: 'EE_LS8_Export',
-    folder: 'Earth Engine',
-    region: landsat.geometry()
-  });    
-
-  // Inputs for the habitat classification, this could  be a single image but
-  // for processing in ArcGIS it is a bit easier to have each band as an image
+function queueExports(results) {
+  // Land cover classification, this must be it's own image since it's 
+  // classified data
   Export.image.toDrive({
     image: results.select('landcover'),
     description: 'EE_Classified_LS8_Export',
     folder: 'Earth Engine',
     region: results.geometry()
   });  
+
+  // Inputs for the habitat classification, this could  be a single image but
+  // for processing in ArcGIS it is a bit easier to have each band as an image  
   Export.image.toDrive({
     image: results.select('annual_rainfall'),
     description: 'EE_AnnualRainfall_CHIRPS_Export',

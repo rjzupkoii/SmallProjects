@@ -33,7 +33,10 @@ exports.process = function(image) {
   
   // Perform the final risk assessment
   var risk = riskAssessment(results.select('landcover'), habitat);
-  return results.addBands(risk.rename('risk'));  
+  results = results.addBands(risk.rename('risk'));  
+  
+  // Perform a final clip on everything to make sure it's bound to the AOI
+  return results.clip(aoi);
 };
 
 // Get the mean monthly rainfall from the CHIPS dataset for 2019
@@ -169,5 +172,5 @@ function temperatureBounds(aoi, minimum, maximum) {
     return image.clip(aoi);
   });
   
-  return collection.reduce(ee.Reducer.sum());  
+  return collection.reduce(ee.Reducer.sum()).toInt();  
 }
