@@ -121,18 +121,27 @@ function meanTemperature(aoi) {
 }
 
 function riskAssessment(landcover, habitat) {
-  // Generate the 5 km buffer based upon the land cover type, using cumulative 
+  // Generate the 1 km buffer based upon the land cover type, using cumulative 
   // cost for the buffer isn't exactly the same as a buffer, but results in
   // the same effect
   var buffer = ee.Image(0).expression('landcover >= 20', {landcover: landcover});
   buffer = ee.Image(1).cumulativeCost({
     source: buffer, 
-    maxDistance: 5000,
-  }).lt(5000);
+    maxDistance: 1000,
+  }).lt(1000);
   var masked = habitat.updateMask(buffer);
   
   // High risk are areas where humans likely live along side mosquitos
-  var high = ee.Image(0).expression('(landcover >= 20) && (habitat > 1)', {landcover: landcover, habitat: habitat});
+//  var high = ee.Image(0).expression('(landcover >= 20) && (habitat > 1)', {landcover: landcover, habitat: habitat});
+  var high = ee.Image(0).expression('masked > 1 ? 1 : 0', {masked: masked});      
+  
+  // Generate the 5 km buffer based upon the land cover type
+  buffer = ee.Image(0).expression('landcover >= 20', {landcover: landcover});
+  buffer = ee.Image(1).cumulativeCost({
+    source: buffer, 
+    maxDistance: 5000,
+  }).lt(5000);
+  masked = habitat.updateMask(buffer);
   
   // Moderate risk is mosquito habitat with 5km of humans, 
   // note ternary operator to force a value with the mask 
