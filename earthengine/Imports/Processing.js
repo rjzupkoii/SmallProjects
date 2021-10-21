@@ -43,10 +43,8 @@ exports.process = function(image) {
 function annualRainfall(aoi) {
   var collection = ee.ImageCollection('UCSB-CHG/CHIRPS/PENTAD')
     .filterDate('2019-01-01', '2019-12-31');
-  collection = collection.map(function(image) {
-    return image.clip(aoi);
-  });
-  return collection.reduce(ee.Reducer.sum());
+  var results = collection.reduce(ee.Reducer.sum());
+  return results.clip(aoi);
 }
 
 // Classify the land cover for the image provided
@@ -108,14 +106,12 @@ function habitatClassification(inputs) {
 function meanTemperature(aoi) {
   var collection = ee.ImageCollection('MODIS/006/MOD11A1')
     .filterDate('2019-01-01', '2019-12-31');
-  collection = collection.map(function(image) {
-    return image.clip(aoi);
-  });
-  
+
   // Scaled value in K must be converted to C, result = DN * 0.02 - 273.15
   collection = collection.map(function(image){
     var kelvin = image.select('LST_Day_1km');
-    var celsius = ee.Image(0).expression('kelvin * 0.02 - 273.15', {kelvin: kelvin});
+    var celsius = ee.Image().expression('kelvin * 0.02 - 273.15', {kelvin: kelvin});
+    celsius = celsius.clip(aoi);
     return image.addBands(celsius.rename('LST_Day_1km_celsius'));
   });
   collection = collection.select('LST_Day_1km_celsius');
@@ -153,16 +149,14 @@ function riskAssessment(landcover, habitat) {
 function temperatureBounds(aoi, minimum, maximum) {
   var collection = ee.ImageCollection('MODIS/006/MOD11A1')
     .filterDate('2019-01-01', '2019-12-31');
-  collection = collection.map(function(image) {
-    return image.clip(aoi);
-  });
-  
+
   // Add a band with a count of the days outside of the bounds, minimum <= temp <= maximum
   collection = collection.map(function(image) {
     var kelvin = image.select('LST_Day_1km');
     var celsius = ee.Image(0).expression('kelvin * 0.02 - 273.15', {kelvin: kelvin});
     var count = ee.Image(0).expression('(celsius < minimum) || (celsius > maximum)', 
       {celsius: celsius, minimum: minimum, maximum: maximum});
+    count = count.clip(aoi);
     return image.addBands(count.rename('Outside_Bounds'));
   });
   collection = collection.select('Outside_Bounds');
