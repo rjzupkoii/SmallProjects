@@ -40,6 +40,7 @@ function queueExports(results) {
     image: results.select('landcover'),
     description: 'EE_Classified_LS8_Export',
     folder: 'Earth Engine',
+    scale: 30,
     region: results.geometry()
   });  
 
@@ -49,18 +50,21 @@ function queueExports(results) {
     image: results.select('annual_rainfall'),
     description: 'EE_AnnualRainfall_CHIRPS_Export',
     folder: 'Earth Engine',
+    scale: 5566,
     region: results.geometry()
   });
   Export.image.toDrive({
     image: results.select('mean_temperature'),
     description: 'EE_MeanTemperature_MODIS_Export',
     folder: 'Earth Engine',
+    scale: 1000,
     region: results.geometry()
   });
   Export.image.toDrive({
     image: results.select('temperature_bounds'),
     description: 'EE_TemperatureBounds_Export',
     folder: 'Earth Engine',
+    scale: 1000,
     region: results.geometry()
   });  
   
@@ -69,12 +73,14 @@ function queueExports(results) {
     image: results.select('habitat'),
     description: 'EE_Habitat_Export',
     folder: 'Earth Engine',
+    scale: 30,
     region: results.geometry()
   }); 
   Export.image.toDrive({
     image: results.select('risk'),
     description: 'EE_Risk_Export',
     folder: 'Earth Engine',
+    scale: 30,
     region: results.geometry()
   });   
 }
