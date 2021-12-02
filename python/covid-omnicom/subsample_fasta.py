@@ -32,7 +32,7 @@ def main(folder, count):
                     samples = random.sample(samples, count)
 
                 # Write the samples to the output
-                print("Sampling {} samples of {} ...".format(count, len(lines)))
+                print("Sampling {} sequences of {} ...".format(count, len(lines)))
                 for sample in sorted(samples):
                     input.seek(lines[sample])
                     block = input.read(lines[sample + 1] - lines[sample])
