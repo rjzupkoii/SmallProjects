@@ -16,5 +16,8 @@ This directory contains simple ABMs written in [NetLogo 6.0.1](https://ccl.north
 ## Perl
 Small but useful Perl scripts.
 
+## Python
+Python scripts that are largely decoupled from other project repositories.
+
 ## R
 Small but useful R scripts.
