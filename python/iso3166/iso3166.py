@@ -23,7 +23,6 @@ def get_iso(path, level):
     print('Downloading ISO 3166-{} codes...'.format(level), end='', flush=True)
     temp = urllib.request.urlretrieve(ISO_6166_URL.format(level))
     print('done!')
-    print(temp[1])
 
     # Read the file and strip the header information
     print('Parsing ISO 3166-{} codes...'.format(level), end='', flush=True)
