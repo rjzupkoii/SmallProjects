@@ -2,7 +2,13 @@
 
 # algorithm.py
 #
-# Alternative approach to to the classic Sub-Set Sum problem
+# Alternative approach to to the classic Sub-Set Sum problem, time and space 
+# complexity appear to be about O(2^(n / 3)) for an exact solution using
+# recursion. Without recursion it should be possible to use linearly bounded
+# space - maybe O(2n)?
+#
+# Matrix-based memoization techniques actually hurt the performance over just
+# checking the same location again.
 import math
 import random
 
@@ -12,33 +18,24 @@ class subset:
   ops = 0       # Analytics
 
   def prepare(self, set, target):
-    # Return false if the sum of the set is less than the target
-    if sum(set) < target: return False, self.calls, self.ops
-
-    # Sort the set, largest to smallest
-    set.sort(reverse = True)
-
-    # Call the solver and return the its solution along with the analytics
-    return self.solve(set, target), self.calls, self.ops
+    if sum(set) < target: return False, self.calls, self.ops      # 1. Return false if the sum of the set is less than the target
+    set.sort(reverse = True)                                      # 2. Sort the set, largest to smallest
+    return self.solve(set, target), self.calls, self.ops          # 3. Call the solver to begin recursion
 
   def solve(self, set, target):
-    working = target                                    # 1. Copy the working value
-    for ndx in range(len(set)):                         # 2. Scan for the next valid value
+    for ndx in range(len(set)):                                   # 4. Scan for the next valid value
+      self.ops += 1       # Analytics
 
-      self.ops += 1     # Analytics
-      
-      if set[ndx] <= working:                           # 2.1 Examine a possible set value
-        working -= set[ndx]                             # 2.1.1 Apply the change
-        if working == 0: return True                    # 2.1.2 Return true if the sum is zero
-        if (ndx + 1) == len(set): return False          # 2.1.3 If we are at the end of the set, then the answer must be False
+      if set[ndx] > target: continue                              # 4.1 If the value is greater, continue
+      if (target - set[ndx]) == 0: return True                    # 4.2 Return true if the sum is zero
+      if (ndx + 1) == len(set): return False                      # 4.3 If we are at the end of the set, then the answer must be False
 
-        self.calls += 1     # Analytics
+      self.calls += 1     # Analytics
 
-        result = self.solve(set[(ndx + 1):], working)   # 2.1.4 Otherwise, check the working value against the smaller
-        if result == True: return True                  # 2.1.5 If the result was true, pass it along
-        working += set[ndx]                             # 2.1.6 Otherwise, reverse the value
+      result = self.solve(set[(ndx + 1):], (target - set[ndx]))   # 4.4 Otherwise, check the working value against the smaller
+      if result == True: return True                              # 4.5 If the result was true, pass it along
 
-    return False                                        # 3. Loop exited, not a subset
+    return False                                                  # 5. Loop exited, not a subset
 
 
 def driver(set, target):
@@ -71,5 +68,7 @@ def known_sets():
 
 if __name__ == '__main__':
   for ndx in range(1000):
-    set, target = generate(16, 1e4)
+    set, target = generate(96, 1e32)
     driver(set, target)
+
+  # known_sets()
