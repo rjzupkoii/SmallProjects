@@ -18,28 +18,32 @@ class subset:
   ops = 0       # Analytics
 
   def prepare(self, set, target):
-    if sum(set) < target: return False, self.calls, self.ops      # 1. Return false if the sum of the set is less than the target
-    set.sort(reverse = True)                                      # 2. Sort the set, largest to smallest
-    return self.solve(set, target), self.calls, self.ops          # 3. Call the solver to begin recursion
+    if sum(set) < target: return False, [], self.calls, self.ops        # 1. Return false if the sum of the set is less than the target
+    set.sort(reverse = True)                                            # 2. Sort the set, largest to smallest
+    results, values = self.solve(set, target)                           # 3. Call the solver to begin recursion
+    return results, values, self.calls, self.ops
 
   def solve(self, set, target):
-    for ndx in range(len(set)):                                   # 4. Scan for the next valid value
+    results = []                                                        # 4. Prepare our working space
+    for ndx in range(len(set)):                                         # 5. Scan for the next valid value
+
       self.ops += 1       # Analytics
 
-      if set[ndx] > target: continue                              # 4.1 If the value is greater, continue
-      if (target - set[ndx]) == 0: return True                    # 4.2 Return true if the sum is zero
-      if (ndx + 1) == len(set): return False                      # 4.3 If we are at the end of the set, then the answer must be False
+      if set[ndx] > target: continue                                    # 5.1 If the value is greater, continue
+      results.append(set[ndx])                                          # 5.2 Append the current value to the results
+      if (target - set[ndx]) == 0: return True, results                 # 5.3 Return true if the sum is zero
+      if (ndx + 1) == len(set): return False, []                        # 5.4 If we are at the end of the set, then the answer must be False
 
       self.calls += 1     # Analytics
 
-      result = self.solve(set[(ndx + 1):], (target - set[ndx]))   # 4.4 Otherwise, check the working value against the smaller
-      if result == True: return True                              # 4.5 If the result was true, pass it along
-
-    return False                                                  # 5. Loop exited, not a subset
+      result, temp = self.solve(set[(ndx + 1):], (target - set[ndx]))   # 5.5 Otherwise, check the working value against the smaller
+      if result == True: return True, (results + temp)                  # 5.6 If the result was true, pass it along
+      results.pop()                                                     # 5.7 The last value was not a match, remove it
+    return False, []                                                    # 6. Loop exited, not a subset
 
 
 def driver(set, target):
-  result, calls, ops = subset().prepare(set, target)
+  result, values, calls, ops = subset().prepare(set, target)
 
   # Calculate the density, Howgrave-Graham & Joux (2010)
   density = len(set) / math.log2(max(set))
@@ -47,7 +51,8 @@ def driver(set, target):
   with open('results.csv', 'a') as out:
     out.write('{},{},{:.4f},{}\n'.format(ops, calls, density, result))
 
-  # print(set, target, result)
+  if result: print(target, values, sum(values))
+
   print('Ops: {}, Calls: {}, Density: {:.4f}'.format(ops, calls, density))
 
 def generate(size, bound):
