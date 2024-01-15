@@ -9,7 +9,14 @@
 int main() {
     auto devices = 0;
 
-    cudaGetDeviceCount(&devices);
+    // Get the device count, check for an error
+    auto error = cudaGetDeviceCount(&devices);
+    if (error != cudaSuccess) {
+        printf("%s\n", cudaGetErrorString(error));
+        return EXIT_FAILURE;
+    }
+
+    // Print the properties for each device installed
     for (auto ndx = 0; ndx < devices; ndx++) {
         cudaDeviceProp properties;
         cudaGetDeviceProperties(&properties, ndx);
